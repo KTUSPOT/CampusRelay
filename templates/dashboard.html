@@ -1,0 +1,281 @@
+{% extends "base.html" %}
+
+{% block title %}Seller Dashboard | CampusKit{% endblock %}
+
+{% block content %}
+<div class="ambient-glow-bg border-b border-slate-200/80 py-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div>
+        <div class="flex items-center space-x-2">
+          <h1 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">Seller Dashboard</h1>
+          <span class="px-3 py-1 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 border border-emerald-300">Senior Hub</span>
+        </div>
+        <p class="text-slate-500 text-xs sm:text-sm mt-1 font-medium">Manage your active listings, track buyer reservations, and update sales status.</p>
+      </div>
+
+      <a href="/sell" class="inline-flex items-center space-x-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-xs shadow-md shadow-emerald-600/20 btn-shimmer transition">
+        <i data-lucide="plus" class="w-4 h-4"></i>
+        <span>List Another Item</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+  
+  <!-- Executive Metrics Bar -->
+  <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+    
+    <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm space-y-2">
+      <div class="flex items-center justify-between text-slate-500">
+        <span class="text-xs font-black uppercase tracking-wider font-display">Active Listings</span>
+        <div class="p-2.5 rounded-2xl bg-emerald-50 text-emerald-600 shadow-xs"><i data-lucide="tag" class="w-4 h-4"></i></div>
+      </div>
+      <div class="text-3xl sm:text-4xl font-black text-slate-900 font-display">{{ stats.active_listings }}</div>
+      <div class="text-[11px] text-emerald-600 font-bold">Live on campus store</div>
+    </div>
+
+    <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm space-y-2">
+      <div class="flex items-center justify-between text-slate-500">
+        <span class="text-xs font-black uppercase tracking-wider font-display">Reserved Items</span>
+        <div class="p-2.5 rounded-2xl bg-amber-50 text-amber-600 shadow-xs"><i data-lucide="clock" class="w-4 h-4"></i></div>
+      </div>
+      <div class="text-3xl sm:text-4xl font-black text-amber-600 font-display">{{ stats.reserved_listings }}</div>
+      <div class="text-[11px] text-amber-700 font-bold">Awaiting pickup handover</div>
+    </div>
+
+    <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm space-y-2">
+      <div class="flex items-center justify-between text-slate-500">
+        <span class="text-xs font-black uppercase tracking-wider font-display">Items Sold</span>
+        <div class="p-2.5 rounded-2xl bg-indigo-50 text-indigo-600 shadow-xs"><i data-lucide="check-circle-2" class="w-4 h-4"></i></div>
+      </div>
+      <div class="text-3xl sm:text-4xl font-black text-indigo-600 font-display">{{ stats.items_sold }}</div>
+      <div class="text-[11px] text-indigo-700 font-bold">Handed over to juniors</div>
+    </div>
+
+    <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm space-y-2">
+      <div class="flex items-center justify-between text-slate-500">
+        <span class="text-xs font-black uppercase tracking-wider font-display">Total Earned</span>
+        <div class="p-2.5 rounded-2xl bg-emerald-50 text-emerald-600 shadow-xs"><i data-lucide="indian-rupee" class="w-4 h-4"></i></div>
+      </div>
+      <div class="text-3xl sm:text-4xl font-black text-slate-900 font-display">₹{{ "{:,.0f}".format(stats.total_earned) }}</div>
+      <div class="text-[11px] text-slate-500 font-bold">Cash recovered from gear</div>
+    </div>
+
+  </div>
+
+  <!-- Tabbed Content Card -->
+  <div class="bg-white rounded-3xl border border-slate-200/90 shadow-premium overflow-hidden">
+    
+    <!-- Tab Controls -->
+    <div class="flex border-b border-slate-200/90 bg-slate-50/70 text-xs font-black uppercase tracking-wider font-display">
+      <button 
+        id="tab-btn-listings" 
+        onclick="switchDashboardTab('listings')" 
+        class="flex items-center space-x-2 px-8 py-5 border-b-2 border-emerald-600 text-emerald-700 bg-white"
+      >
+        <i data-lucide="package" class="w-4 h-4"></i>
+        <span>My Listings ({{ products|length }})</span>
+      </button>
+      
+      <button 
+        id="tab-btn-reservations" 
+        onclick="switchDashboardTab('reservations')" 
+        class="flex items-center space-x-2 px-8 py-5 border-b-2 border-transparent text-slate-500 hover:text-slate-900 transition"
+      >
+        <i data-lucide="inbox" class="w-4 h-4"></i>
+        <span>Buyer Reservations ({{ reservations|length }})</span>
+        {% if reservations|length > 0 %}
+          <span class="px-2 py-0.5 rounded-full text-[10px] bg-amber-500 text-white font-black">{{ reservations|length }}</span>
+        {% endif %}
+      </button>
+    </div>
+
+    <!-- Tab 1: My Listings -->
+    <div id="tab-content-listings" class="p-6 sm:p-8">
+      {% if products %}
+        <div class="divide-y divide-slate-100">
+          {% for product in products %}
+            <div class="py-6 flex flex-col md:flex-row md:items-center md:justify-between gap-6 first:pt-0 last:pb-0">
+              
+              <!-- Left: Image & Info -->
+              <div class="flex items-center space-x-5">
+                <div class="w-20 h-20 bg-slate-50 rounded-2xl border border-slate-200 p-2 flex-shrink-0 flex items-center justify-center shadow-xs">
+                  <img src="{{ product.image_url }}" alt="{{ product.name }}" class="w-full h-full object-contain">
+                </div>
+                <div class="space-y-1.5">
+                  <div class="flex items-center space-x-2">
+                    <span class="px-2.5 py-0.5 rounded-md text-[10px] font-black bg-slate-100 text-slate-700 uppercase">{{ product.category }}</span>
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black {% if product.status == 'available' %}badge-available{% elif product.status == 'reserved' %}badge-reserved{% else %}badge-sold{% endif %}">
+                      {{ product.status.capitalize() }}
+                    </span>
+                  </div>
+                  <h3 class="font-bold text-slate-900 text-base font-display">
+                    <a href="/product/{{ product.id }}" class="hover:text-emerald-600 transition">{{ product.name }}</a>
+                  </h3>
+                  <div class="text-xs text-slate-500 flex items-center space-x-3 font-semibold">
+                    <span class="font-black text-slate-900 text-sm">₹{{ "{:,.0f}".format(product.price) }}</span>
+                    <span>•</span>
+                    <span>📍 {{ product.location }}</span>
+                    <span>•</span>
+                    <span>{{ product.views }} views</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Status Toggle Buttons & Actions -->
+              <div class="flex flex-wrap items-center gap-2.5">
+                
+                <div class="inline-flex rounded-2xl shadow-xs border border-slate-200 bg-slate-50 p-1">
+                  <button 
+                    onclick="setProductStatus({{ product.id }}, 'available')"
+                    class="px-3 py-1.5 text-xs font-black rounded-xl transition {% if product.status == 'available' %}bg-emerald-600 text-white shadow-xs{% else %}text-slate-600 hover:bg-slate-200/60{% endif %}"
+                  >
+                    Available
+                  </button>
+                  <button 
+                    onclick="setProductStatus({{ product.id }}, 'reserved')"
+                    class="px-3 py-1.5 text-xs font-black rounded-xl transition {% if product.status == 'reserved' %}bg-amber-500 text-white shadow-xs{% else %}text-slate-600 hover:bg-slate-200/60{% endif %}"
+                  >
+                    Reserved
+                  </button>
+                  <button 
+                    onclick="setProductStatus({{ product.id }}, 'sold')"
+                    class="px-3 py-1.5 text-xs font-black rounded-xl transition {% if product.status == 'sold' %}bg-slate-900 text-white shadow-xs{% else %}text-slate-600 hover:bg-slate-200/60{% endif %}"
+                  >
+                    Sold
+                  </button>
+                </div>
+
+                <a href="/product/{{ product.id }}" class="p-2.5 rounded-xl text-slate-500 hover:text-slate-900 hover:bg-slate-100 transition shadow-xs border border-slate-200 bg-white" title="View Details">
+                  <i data-lucide="eye" class="w-4 h-4"></i>
+                </a>
+
+                <button onclick="deleteListing({{ product.id }})" class="p-2.5 rounded-xl text-rose-500 hover:text-rose-700 hover:bg-rose-50 transition shadow-xs border border-rose-100 bg-white" title="Delete Listing">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+
+              </div>
+
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="text-center py-12 space-y-3">
+          <div class="w-14 h-14 rounded-3xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto shadow-xs">
+            <i data-lucide="tag" class="w-7 h-7"></i>
+          </div>
+          <h4 class="font-bold text-slate-900 text-base font-display">You haven't listed any equipment yet</h4>
+          <p class="text-xs text-slate-500 max-w-sm mx-auto font-medium">Turn unused drafters, drawing kits, calculators or S1/S2 books into cash today.</p>
+          <div class="pt-2">
+            <a href="/sell" class="inline-flex items-center px-5 py-2.5 rounded-xl bg-emerald-600 text-white text-xs font-black hover:bg-emerald-700 shadow-xs">
+              List Your First Item
+            </a>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+
+    <!-- Tab 2: Reservations Received -->
+    <div id="tab-content-reservations" class="hidden p-6 sm:p-8">
+      {% if reservations %}
+        <div class="space-y-4">
+          {% for res in reservations %}
+            <div class="p-6 rounded-3xl border border-slate-200/90 bg-slate-50/50 space-y-4 shadow-xs">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div class="flex items-center space-x-3.5">
+                  <div class="w-10 h-10 rounded-2xl bg-indigo-600 text-white font-black flex items-center justify-center text-sm shadow-xs">
+                    {{ res.buyer_name[0] }}
+                  </div>
+                  <div>
+                    <h4 class="font-bold text-slate-900 text-sm flex items-center space-x-2 font-display">
+                      <span>{{ res.buyer_name }}</span>
+                      <span class="text-xs font-normal text-slate-500">({{ res.buyer_year }})</span>
+                    </h4>
+                    <div class="text-xs text-slate-500 font-medium">
+                      📍 {{ res.buyer_hostel }} • {{ res.created_at[:16] }}
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                  <span class="px-3 py-1 rounded-full text-xs font-black {% if res.status == 'pending' %}bg-amber-100 text-amber-800 border border-amber-300{% elif res.status == 'completed' or res.status == 'confirmed' %}bg-emerald-100 text-emerald-800 border border-emerald-300{% else %}bg-slate-100 text-slate-600{% endif %}">
+                    Status: {{ res.status.capitalize() }}
+                  </span>
+                </div>
+              </div>
+
+              <!-- Product & Note -->
+              <div class="bg-white p-5 rounded-2xl border border-slate-200 space-y-2 shadow-xs">
+                <div class="text-xs font-black text-slate-800 font-display">Reserved Item: <span class="text-emerald-700">{{ res.product_name }}</span> (₹{{ "{:,.0f}".format(res.price) }})</div>
+                {% if res.note %}
+                  <div class="text-xs text-slate-600 bg-slate-50/80 p-3 rounded-xl border border-slate-100 italic font-medium">
+                    "{{ res.note }}"
+                  </div>
+                {% endif %}
+              </div>
+
+              <!-- Actions -->
+              <div class="flex flex-wrap items-center justify-between gap-3 pt-1">
+                <button 
+                  onclick="openWhatsAppContact('{{ res.buyer_phone }}', '{{ res.product_name|replace('\'', '\\\'') }}', '{{ res.price }}', '{{ res.buyer_hostel|replace('\'', '\\\'') }}', '{{ res.buyer_name|replace('\'', '\\\'') }}')"
+                  class="px-4 py-2.5 rounded-xl btn-whatsapp text-white font-black text-xs flex items-center space-x-2 shadow-glow-whatsapp transition cursor-pointer"
+                >
+                  <i data-lucide="message-circle" class="w-4 h-4"></i>
+                  <span>WhatsApp {{ res.buyer_name.split()[0] }}</span>
+                </button>
+
+                <div class="flex items-center space-x-2">
+                  {% if res.status == 'pending' %}
+                    <button onclick="updateReservation({{ res.id }}, 'confirmed')" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-emerald-600 text-white text-xs font-black transition">
+                      Confirm Sale &amp; Mark Sold
+                    </button>
+                    <button onclick="updateReservation({{ res.id }}, 'cancelled')" class="px-4 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold transition">
+                      Cancel Reservation
+                    </button>
+                  {% endif %}
+                </div>
+              </div>
+
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="text-center py-12 space-y-3">
+          <div class="w-14 h-14 rounded-3xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto shadow-xs">
+            <i data-lucide="inbox" class="w-7 h-7"></i>
+          </div>
+          <h4 class="font-bold text-slate-900 text-base font-display">No active buyer reservations</h4>
+          <p class="text-xs text-slate-500 max-w-sm mx-auto font-medium">When an engineering junior reserves one of your items, their pickup request and WhatsApp contact will appear here.</p>
+        </div>
+      {% endif %}
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+function switchDashboardTab(tab) {
+  const listingsTab = document.getElementById('tab-content-listings');
+  const reservationsTab = document.getElementById('tab-content-reservations');
+  const btnListings = document.getElementById('tab-btn-listings');
+  const btnReservations = document.getElementById('tab-btn-reservations');
+
+  if (tab === 'listings') {
+    listingsTab.classList.remove('hidden');
+    reservationsTab.classList.add('hidden');
+    
+    btnListings.className = 'flex items-center space-x-2 px-8 py-5 border-b-2 border-emerald-600 text-emerald-700 bg-white';
+    btnReservations.className = 'flex items-center space-x-2 px-8 py-5 border-b-2 border-transparent text-slate-500 hover:text-slate-900 transition';
+  } else {
+    listingsTab.classList.add('hidden');
+    reservationsTab.classList.remove('hidden');
+    
+    btnReservations.className = 'flex items-center space-x-2 px-8 py-5 border-b-2 border-emerald-600 text-emerald-700 bg-white';
+    btnListings.className = 'flex items-center space-x-2 px-8 py-5 border-b-2 border-transparent text-slate-500 hover:text-slate-900 transition';
+  }
+}
+</script>
+{% endblock %}

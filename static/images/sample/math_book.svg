@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="navyBook" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="goldAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#d97706"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="#f8fafc" rx="16"/>
+  <g transform="translate(85, 40)">
+    <rect x="-15" y="10" width="25" height="310" rx="4" fill="#172554" stroke="#0f172a" stroke-width="2"/>
+    <rect x="225" y="15" width="15" height="300" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+    <rect x="0" y="0" width="230" height="320" rx="8" fill="url(#navyBook)" stroke="#1e40af" stroke-width="3"/>
+    <rect x="0" y="25" width="230" height="8" fill="url(#goldAccent)"/>
+    <text x="115" y="70" fill="#ffffff" font-family="serif, system-ui" font-size="18" font-weight="bold" text-anchor="middle" letter-spacing="1">HIGHER</text>
+    <text x="115" y="95" fill="#60a5fa" font-family="serif, system-ui" font-size="18" font-weight="bold" text-anchor="middle">ENGINEERING</text>
+    <text x="115" y="120" fill="#fbbf24" font-family="serif, system-ui" font-size="18" font-weight="bold" text-anchor="middle">MATHEMATICS</text>
+    <rect x="45" y="135" width="140" height="2" fill="url(#goldAccent)"/>
+    <rect x="30" y="150" width="170" height="85" rx="6" fill="rgba(255, 255, 255, 0.07)" stroke="#3b82f6" stroke-width="1"/>
+    <text x="115" y="175" fill="#93c5fd" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">∇²ψ = (1/c²) ∂²ψ/∂t²</text>
+    <text x="115" y="198" fill="#cbd5e1" font-family="monospace" font-size="10" text-anchor="middle">L{f(t)} = ∫₀^∞ e⁻ˢᵗ f(t) dt</text>
+    <text x="115" y="220" fill="#fbbf24" font-family="monospace" font-size="10" text-anchor="middle">det(A - λI) = 0</text>
+    <text x="115" y="265" fill="#ffffff" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" text-anchor="middle">B. S. GREWAL</text>
+    <rect x="65" y="280" width="100" height="20" rx="10" fill="#dc2626"/>
+    <text x="115" y="294" fill="#ffffff" font-family="system-ui, sans-serif" font-size="10" font-weight="bold" text-anchor="middle">44th EDITION</text>
+  </g>
+</svg>

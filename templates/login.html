@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}Log In | CampusKit{% endblock %}
+
+{% block content %}
+<div class="ambient-glow-bg min-h-[85vh] flex items-center justify-center py-16 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    
+    <!-- Header -->
+    <div class="text-center space-y-2">
+      <div class="w-14 h-14 rounded-3xl bg-gradient-to-tr from-emerald-600 via-teal-500 to-emerald-400 text-white font-black text-2xl flex items-center justify-center mx-auto shadow-md shadow-emerald-500/20 font-display">
+        CK
+      </div>
+      <h2 class="text-3xl font-black text-slate-900 tracking-tight font-display">Student Sign In</h2>
+      <p class="text-xs text-slate-500 font-medium">Enter your college credentials to buy and sell engineering gear.</p>
+    </div>
+
+    <!-- 1-Click Demo Login Box -->
+    <div class="bg-white/90 backdrop-blur-xl border border-slate-200/90 rounded-3xl p-6 space-y-3 shadow-premium">
+      <div class="flex items-center space-x-2 text-xs font-black uppercase tracking-widest text-slate-800 font-display">
+        <i data-lucide="zap" class="w-4 h-4 text-amber-500"></i>
+        <span>1-Click Test Personas:</span>
+      </div>
+      <div class="grid grid-cols-1 gap-2.5 text-xs font-bold">
+        <button onclick="switchDemoUser('senior')" class="w-full text-left p-3 rounded-2xl bg-slate-50 hover:bg-emerald-50 hover:text-emerald-900 border border-slate-200 hover:border-emerald-300 transition flex items-center justify-between group shadow-xs">
+          <span>👤 Rahul Sharma (S4 Senior / Seller)</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition text-emerald-600"></i>
+        </button>
+        <button onclick="switchDemoUser('junior')" class="w-full text-left p-3 rounded-2xl bg-slate-50 hover:bg-indigo-50 hover:text-indigo-900 border border-slate-200 hover:border-indigo-300 transition flex items-center justify-between group shadow-xs">
+          <span>👤 Ananya Iyer (S1 Junior / Buyer)</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition text-indigo-600"></i>
+        </button>
+        <button onclick="switchDemoUser('admin')" class="w-full text-left p-3 rounded-2xl bg-slate-50 hover:bg-amber-50 hover:text-amber-900 border border-slate-200 hover:border-amber-300 transition flex items-center justify-between group shadow-xs">
+          <span>🛡️ Prof. Radhakrishnan (Campus Admin)</span>
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition text-amber-600"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Login Form Card -->
+    <div class="bg-white rounded-3xl border border-slate-200/90 p-8 shadow-premium space-y-6">
+      <form method="POST" action="/login" class="space-y-4 text-xs font-semibold">
+        
+        <div>
+          <label for="email" class="block font-black uppercase tracking-wider text-slate-700 mb-1.5 font-display">College Email</label>
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            required 
+            placeholder="e.g. rahul.sharma@college.edu"
+            class="w-full p-4 rounded-2xl border border-slate-200 bg-slate-50/70 text-xs font-bold text-slate-900 font-mono focus:bg-white transition"
+          >
+        </div>
+
+        <div>
+          <label for="password" class="block font-black uppercase tracking-wider text-slate-700 mb-1.5 font-display">Password</label>
+          <input 
+            type="password" 
+            id="password" 
+            name="password" 
+            required 
+            placeholder="••••••••"
+            class="w-full p-4 rounded-2xl border border-slate-200 bg-slate-50/70 text-xs font-bold text-slate-900 focus:bg-white transition"
+          >
+          <div class="text-[11px] text-slate-400 mt-1 font-medium">Default demo password: <code class="bg-slate-100 px-1.5 py-0.5 rounded font-mono">password123</code></div>
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-sm tracking-wide shadow-md shadow-emerald-600/20 btn-shimmer transition-all transform hover:-translate-y-0.5"
+        >
+          Sign In to CampusKit
+        </button>
+
+      </form>
+
+      <div class="text-center pt-2 text-xs text-slate-500 font-medium">
+        New student on campus? 
+        <a href="/register" class="font-black text-emerald-700 hover:underline">Verify &amp; Register here</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

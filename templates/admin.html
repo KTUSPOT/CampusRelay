@@ -1,0 +1,234 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard & Moderation | CampusKit{% endblock %}
+
+{% block content %}
+<div class="ambient-dark-glow text-white py-12 border-b border-slate-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div>
+        <div class="flex items-center space-x-2">
+          <h1 class="text-3xl sm:text-4xl font-black tracking-tight font-display">Campus Safety &amp; Moderation</h1>
+          <span class="px-3 py-1 rounded-full text-xs font-black bg-amber-500/20 text-amber-300 border border-amber-500/40">Faculty Portal</span>
+        </div>
+        <p class="text-slate-400 text-xs sm:text-sm mt-1 font-medium">Platform oversight, college student verification status, and equipment moderation.</p>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <a href="/marketplace" class="px-4 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-black border border-slate-700 shadow-xs transition">
+          View Live Marketplace
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-10">
+  
+  <!-- Aggregate Statistics -->
+  <div class="grid grid-cols-2 lg:grid-cols-5 gap-5">
+    
+    <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm space-y-1">
+      <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 font-display">Total Students</div>
+      <div class="text-3xl font-black text-slate-900 font-display">{{ stats.total_users }}</div>
+      <div class="text-[11px] text-emerald-600 font-bold">Verified campus accounts</div>
+    </div>
+
+    <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm space-y-1">
+      <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 font-display">Total Listings</div>
+      <div class="text-3xl font-black text-slate-900 font-display">{{ stats.total_listings }}</div>
+      <div class="text-[11px] text-slate-500 font-bold">Total equipment added</div>
+    </div>
+
+    <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm space-y-1">
+      <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 font-display">Available Items</div>
+      <div class="text-3xl font-black text-emerald-600 font-display">{{ stats.available_items }}</div>
+      <div class="text-[11px] text-emerald-700 font-bold">Active in store</div>
+    </div>
+
+    <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm space-y-1">
+      <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 font-display">Items Sold</div>
+      <div class="text-3xl font-black text-indigo-600 font-display">{{ stats.sold_items }}</div>
+      <div class="text-[11px] text-indigo-700 font-bold">Successful exchanges</div>
+    </div>
+
+    <div class="bg-white rounded-3xl border border-slate-200/90 p-6 shadow-sm col-span-2 lg:col-span-1 space-y-1">
+      <div class="text-[10px] font-black uppercase tracking-widest text-slate-400 font-display">Total Savings</div>
+      <div class="text-3xl font-black text-emerald-600 font-display">₹{{ "{:,.0f}".format(stats.total_savings) }}</div>
+      <div class="text-[11px] text-emerald-700 font-bold">Saved by juniors</div>
+    </div>
+
+  </div>
+
+  <!-- Safety & Moderation Queue -->
+  <div class="bg-white rounded-3xl border border-slate-200/90 shadow-premium overflow-hidden">
+    <div class="p-6 sm:p-8 border-b border-slate-100 flex items-center justify-between">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-9 h-9 rounded-2xl bg-rose-100 text-rose-600 flex items-center justify-center shadow-xs">
+          <i data-lucide="flag" class="w-4 h-4"></i>
+        </div>
+        <h2 class="text-lg font-black text-slate-900 font-display">Flagged Listings Moderation Queue</h2>
+      </div>
+      <span class="text-xs font-black px-3 py-1 rounded-full bg-rose-50 text-rose-700 border border-rose-200">
+        {{ reports|length }} Flagged Items
+      </span>
+    </div>
+
+    {% if reports %}
+      <div class="divide-y divide-slate-100">
+        {% for rep in reports %}
+          <div class="p-6 sm:p-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 bg-rose-50/20">
+            <div class="space-y-1.5">
+              <div class="flex items-center space-x-2">
+                <span class="px-2.5 py-0.5 rounded text-[10px] font-black bg-rose-100 text-rose-800 uppercase">Reason</span>
+                <span class="text-xs font-bold text-slate-900">{{ rep.reason }}</span>
+              </div>
+              <div class="text-sm font-bold text-slate-800 font-display">
+                Item: <a href="/product/{{ rep.product_id }}" class="text-emerald-700 hover:underline">{{ rep.product_name }}</a> (₹{{ "{:,.0f}".format(rep.price) }})
+              </div>
+              <div class="text-xs text-slate-500 font-medium">
+                Reported by: <span class="font-bold text-slate-800">{{ rep.reporter_name }}</span> • Seller: <span class="font-bold text-slate-800">{{ rep.seller_name }}</span>
+              </div>
+            </div>
+
+            <div class="flex items-center space-x-2">
+              <button onclick="adminDeleteProduct({{ rep.product_id }})" class="px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-black text-xs shadow-xs transition">
+                Remove Listing
+              </button>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="p-8 text-center text-xs text-slate-400 font-medium">
+        No pending safety reports. All campus listings are clean.
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Listings Table -->
+  <div class="bg-white rounded-3xl border border-slate-200/90 shadow-premium overflow-hidden">
+    <div class="p-6 sm:p-8 border-b border-slate-100 flex items-center justify-between">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-9 h-9 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center shadow-xs">
+          <i data-lucide="list" class="w-4 h-4"></i>
+        </div>
+        <h2 class="text-lg font-black text-slate-900 font-display">All Marketplace Equipment</h2>
+      </div>
+      <span class="text-xs font-extrabold text-slate-500">{{ products|length }} listings total</span>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs">
+        <thead class="bg-slate-50/80 text-slate-400 font-black uppercase tracking-wider border-b border-slate-100 font-display">
+          <tr>
+            <th class="px-6 py-4">Item</th>
+            <th class="px-6 py-4">Category</th>
+            <th class="px-6 py-4">Price</th>
+            <th class="px-6 py-4">Seller</th>
+            <th class="px-6 py-4">Status</th>
+            <th class="px-6 py-4 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 font-medium">
+          {% for prod in products %}
+            <tr class="hover:bg-slate-50/60 transition">
+              <td class="px-6 py-4 font-bold text-slate-900 flex items-center space-x-3">
+                <img src="{{ prod.image_url }}" class="w-9 h-9 object-contain rounded-xl bg-slate-50 border p-1 shadow-xs">
+                <a href="/product/{{ prod.id }}" class="hover:text-emerald-600 truncate max-w-xs font-display">{{ prod.name }}</a>
+              </td>
+              <td class="px-6 py-4 text-slate-600">{{ prod.category }}</td>
+              <td class="px-6 py-4 font-black text-slate-900 font-display">₹{{ "{:,.0f}".format(prod.price) }}</td>
+              <td class="px-6 py-4 text-slate-600">
+                <div class="font-bold text-slate-800">{{ prod.seller_name }}</div>
+                <div class="text-[10px] text-slate-400 font-semibold">{{ prod.seller_department.split()[0] }}</div>
+              </td>
+              <td class="px-6 py-4">
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black {% if prod.status == 'available' %}badge-available{% elif prod.status == 'reserved' %}badge-reserved{% else %}badge-sold{% endif %}">
+                  {{ prod.status.capitalize() }}
+                </span>
+              </td>
+              <td class="px-6 py-4 text-right space-x-2">
+                <a href="/product/{{ prod.id }}" class="p-2 rounded-xl text-slate-500 hover:text-slate-900 inline-block">
+                  <i data-lucide="eye" class="w-4 h-4"></i>
+                </a>
+                <button onclick="adminDeleteProduct({{ prod.id }})" class="p-2 rounded-xl text-rose-500 hover:text-rose-700 inline-block" title="Delete Listing">
+                  <i data-lucide="trash-2" class="w-4 h-4"></i>
+                </button>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Users Table -->
+  <div class="bg-white rounded-3xl border border-slate-200/90 shadow-premium overflow-hidden">
+    <div class="p-6 sm:p-8 border-b border-slate-100 flex items-center justify-between">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-9 h-9 rounded-2xl bg-indigo-100 text-indigo-800 flex items-center justify-center shadow-xs">
+          <i data-lucide="users" class="w-4 h-4"></i>
+        </div>
+        <h2 class="text-lg font-black text-slate-900 font-display">Registered College Students</h2>
+      </div>
+      <span class="text-xs font-extrabold text-slate-500">{{ users|length }} students</span>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-xs">
+        <thead class="bg-slate-50/80 text-slate-400 font-black uppercase tracking-wider border-b border-slate-100 font-display">
+          <tr>
+            <th class="px-6 py-4">Student Name</th>
+            <th class="px-6 py-4">Email</th>
+            <th class="px-6 py-4">Department &amp; Year</th>
+            <th class="px-6 py-4">Hostel / Location</th>
+            <th class="px-6 py-4">Role</th>
+            <th class="px-6 py-4">Verification</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-slate-100 font-medium">
+          {% for u in users %}
+            <tr class="hover:bg-slate-50/60 transition">
+              <td class="px-6 py-4 font-bold text-slate-900 font-display">{{ u.name }}</td>
+              <td class="px-6 py-4 text-slate-600 font-mono text-[11px]">{{ u.email }}</td>
+              <td class="px-6 py-4 text-slate-600">{{ u.department }} ({{ u.year }})</td>
+              <td class="px-6 py-4 text-slate-600">{{ u.hostel }}</td>
+              <td class="px-6 py-4">
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase {% if u.role == 'admin' %}bg-amber-100 text-amber-800{% elif u.role == 'senior' %}bg-emerald-100 text-emerald-800{% else %}bg-indigo-100 text-indigo-800{% endif %}">
+                  {{ u.role }}
+                </span>
+              </td>
+              <td class="px-6 py-4">
+                <span class="inline-flex items-center text-emerald-600 font-black">
+                  <i data-lucide="check" class="w-3.5 h-3.5 mr-1"></i> Verified
+                </span>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+async function adminDeleteProduct(productId) {
+  if (!confirm("Admin confirmation: Permanently delete this listing from CampusKit?")) return;
+
+  try {
+    const res = await fetch(`/api/admin/delete-listing/${productId}`, { method: 'POST' });
+    const data = await res.json();
+    if (data.success) {
+      showToast("Listing permanently removed by Admin.", "info");
+      setTimeout(() => location.reload(), 600);
+    } else {
+      showToast(data.message || "Failed to remove listing", "error");
+    }
+  } catch (err) {
+    showToast("Network error deleting listing", "error");
+  }
+}
+</script>
+{% endblock %}

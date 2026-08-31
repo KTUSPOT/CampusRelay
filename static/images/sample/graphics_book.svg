@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="crimsonBook" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#881337"/>
+      <stop offset="100%" stop-color="#4c0519"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="#f8fafc" rx="16"/>
+  <g transform="translate(85, 40)">
+    <rect x="-15" y="10" width="25" height="310" rx="4" fill="#4c0519" stroke="#2e020d" stroke-width="2"/>
+    <rect x="225" y="15" width="15" height="300" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+    <rect x="0" y="0" width="230" height="320" rx="8" fill="url(#crimsonBook)" stroke="#be123c" stroke-width="3"/>
+    <rect x="0" y="25" width="230" height="6" fill="#f43f5e"/>
+    <text x="115" y="65" fill="#fecdd3" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" text-anchor="middle" letter-spacing="2">ELEMENTARY</text>
+    <text x="115" y="90" fill="#ffffff" font-family="system-ui, sans-serif" font-size="18" font-weight="800" text-anchor="middle">ENGINEERING</text>
+    <text x="115" y="115" fill="#f43f5e" font-family="system-ui, sans-serif" font-size="18" font-weight="800" text-anchor="middle">DRAWING</text>
+    <g transform="translate(115, 195)">
+      <polygon points="0,-30 35,-10 0,10 -35,-10" fill="#fb7185" stroke="#ffffff" stroke-width="1.5"/>
+      <polygon points="-35,-10 0,10 0,45 -35,25" fill="#e11d48" stroke="#ffffff" stroke-width="1.5"/>
+      <polygon points="0,10 35,-10 35,25 0,45" fill="#9f1239" stroke="#ffffff" stroke-width="1.5"/>
+    </g>
+    <text x="115" y="270" fill="#ffffff" font-family="system-ui, sans-serif" font-size="15" font-weight="bold" text-anchor="middle">N. D. BHATT</text>
+    <text x="115" y="290" fill="#fda4af" font-family="system-ui, sans-serif" font-size="9" text-anchor="middle">Charotar Publishing House</text>
+  </g>
+</svg>

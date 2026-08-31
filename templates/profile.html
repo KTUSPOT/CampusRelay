@@ -1,0 +1,220 @@
+{% extends "base.html" %}
+
+{% block title %}Student Profile | CampusKit{% endblock %}
+
+{% block content %}
+<div class="ambient-glow-bg border-b border-slate-200/80 py-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div class="flex items-center space-x-4">
+        <div class="w-16 h-16 rounded-3xl bg-slate-900 text-white font-black text-2xl flex items-center justify-center shadow-md font-display">
+          {{ user.name[0] }}
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <h1 class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight font-display">{{ user.name }}</h1>
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-black bg-emerald-100 text-emerald-800 border border-emerald-300">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 mr-1 text-emerald-600"></i> Verified Student
+            </span>
+          </div>
+          <p class="text-slate-500 text-xs sm:text-sm mt-0.5 font-medium">{{ user.department }} • {{ user.year }}</p>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <button onclick="document.getElementById('edit-profile-modal').classList.remove('hidden')" class="px-4 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-extrabold shadow-xs transition">
+          Edit Profile
+        </button>
+        <a href="/api/logout" class="px-4 py-2.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-bold transition">
+          Log Out
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+  
+  <!-- Info Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    
+    <div class="bg-white rounded-3xl border border-slate-200/90 p-6 space-y-3 shadow-xs">
+      <div class="text-[10.5px] font-black uppercase tracking-widest text-slate-400 font-display">Campus Contact</div>
+      <div class="space-y-2 text-xs">
+        <div class="flex items-center space-x-2.5 text-slate-800 font-medium">
+          <i data-lucide="mail" class="w-4 h-4 text-slate-400"></i>
+          <span class="font-mono text-[11px]">{{ user.email }}</span>
+        </div>
+        <div class="flex items-center space-x-2.5 text-slate-800 font-bold">
+          <i data-lucide="phone" class="w-4 h-4 text-slate-400"></i>
+          <span class="font-mono">{{ user.phone }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-3xl border border-slate-200/90 p-6 space-y-3 shadow-xs">
+      <div class="text-[10.5px] font-black uppercase tracking-widest text-slate-400 font-display">Campus Pickup Location</div>
+      <div class="space-y-2 text-xs">
+        <div class="flex items-center space-x-2 text-slate-800 font-extrabold">
+          <i data-lucide="map-pin" class="w-4 h-4 text-emerald-600"></i>
+          <span>{{ user.hostel }}</span>
+        </div>
+        <p class="text-[11px] text-slate-400 font-medium">Pickup point for senior-junior gear exchanges.</p>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-3xl border border-slate-200/90 p-6 space-y-3 shadow-xs">
+      <div class="text-[10.5px] font-black uppercase tracking-widest text-slate-400 font-display">Marketplace Role</div>
+      <div class="space-y-1">
+        <div class="text-sm font-extrabold capitalize text-slate-900 flex items-center space-x-2 font-display">
+          <span>{{ user.role }}</span>
+          <span class="text-[10px] font-black px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">Verified</span>
+        </div>
+        <p class="text-[11px] text-slate-400 font-medium">Member since {{ user.created_at[:10] }}</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Booked / Reserved Items -->
+  <div class="bg-white rounded-3xl border border-slate-200/90 shadow-premium p-6 sm:p-8 space-y-6">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-9 h-9 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center shadow-xs">
+          <i data-lucide="bookmark" class="w-4 h-4"></i>
+        </div>
+        <h2 class="text-lg font-black text-slate-900 font-display">My Reserved Items (As Buyer)</h2>
+      </div>
+      <span class="text-xs font-extrabold text-slate-500">{{ my_reservations|length }} items</span>
+    </div>
+
+    {% if my_reservations %}
+      <div class="divide-y divide-slate-100">
+        {% for res in my_reservations %}
+          <div class="py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 first:pt-0 last:pb-0">
+            <div class="flex items-center space-x-4">
+              <div class="w-16 h-16 bg-slate-50 rounded-2xl border border-slate-200 p-2 flex-shrink-0 flex items-center justify-center shadow-xs">
+                <img src="{{ res.image_url }}" alt="{{ res.product_name }}" class="w-full h-full object-contain">
+              </div>
+              <div class="space-y-1">
+                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black {% if res.status == 'pending' %}bg-amber-100 text-amber-800{% else %}bg-emerald-100 text-emerald-800{% endif %}">
+                  {{ res.status.capitalize() }}
+                </span>
+                <h4 class="font-bold text-slate-900 text-sm font-display">
+                  <a href="/product/{{ res.product_id }}" class="hover:text-emerald-600">{{ res.product_name }}</a>
+                </h4>
+                <div class="text-xs text-slate-500 font-medium">
+                  Senior: <span class="font-bold text-slate-800">{{ res.seller_name }}</span> ({{ res.seller_department.split()[0] }}) • 📍 {{ res.seller_hostel }}
+                </div>
+              </div>
+            </div>
+
+            <div class="flex items-center space-x-3">
+              <span class="font-black text-slate-900 text-base font-display">₹{{ "{:,.0f}".format(res.price) }}</span>
+              <button 
+                onclick="openWhatsAppContact('{{ res.seller_phone }}', '{{ res.product_name|replace('\'', '\\\'') }}', '{{ res.price }}', '{{ res.seller_hostel|replace('\'', '\\\'') }}', '{{ res.seller_name|replace('\'', '\\\'') }}')"
+                class="px-4 py-2.5 rounded-xl btn-whatsapp text-white font-black text-xs flex items-center space-x-1.5 shadow-glow-whatsapp transition cursor-pointer"
+              >
+                <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                <span>WhatsApp Senior</span>
+              </button>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="text-center py-8 text-slate-400 text-xs font-medium">
+        You have not reserved any equipment yet. <a href="/marketplace" class="text-emerald-600 font-black hover:underline">Explore Marketplace</a>
+      </div>
+    {% endif %}
+  </div>
+
+  <!-- Listings by this User -->
+  <div class="bg-white rounded-3xl border border-slate-200/90 shadow-premium p-6 sm:p-8 space-y-6">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-9 h-9 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center shadow-xs">
+          <i data-lucide="tag" class="w-4 h-4"></i>
+        </div>
+        <h2 class="text-lg font-black text-slate-900 font-display">My Listed Equipment</h2>
+      </div>
+      <a href="/sell" class="text-xs font-black text-emerald-600 hover:underline">+ New Listing</a>
+    </div>
+
+    {% if my_listings %}
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {% for prod in my_listings %}
+          <div class="p-4 rounded-2xl border border-slate-200/90 bg-slate-50/50 flex items-center space-x-3.5 shadow-xs">
+            <div class="w-14 h-14 bg-white rounded-xl border border-slate-200 p-1 flex-shrink-0 flex items-center justify-center">
+              <img src="{{ prod.image_url }}" alt="{{ prod.name }}" class="w-full h-full object-contain">
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="text-xs font-bold text-slate-900 truncate font-display">{{ prod.name }}</div>
+              <div class="text-xs text-slate-500 font-semibold">₹{{ "{:,.0f}".format(prod.price) }} • <span class="capitalize font-black text-emerald-700">{{ prod.status }}</span></div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <div class="text-center py-8 text-slate-400 text-xs font-medium">
+        No listings created yet.
+      </div>
+    {% endif %}
+  </div>
+
+</div>
+
+<!-- Edit Profile Modal -->
+<div id="edit-profile-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center modal-backdrop p-4">
+  <div class="bg-white rounded-3xl max-w-lg w-full p-8 shadow-2xl space-y-6">
+    
+    <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+      <h3 class="text-lg font-black text-slate-900 font-display">Update Student Details</h3>
+      <button onclick="document.getElementById('edit-profile-modal').classList.add('hidden')" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-600">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <form method="POST" action="/profile/update" class="space-y-4 text-xs font-semibold">
+      <div>
+        <label class="block font-black uppercase text-slate-700 mb-1 font-display">Full Name</label>
+        <input type="text" name="name" required value="{{ user.name }}" class="w-full p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 text-sm font-bold text-slate-900">
+      </div>
+
+      <div>
+        <label class="block font-black uppercase text-slate-700 mb-1 font-display">Department</label>
+        <select name="department" class="w-full p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 text-sm font-bold text-slate-800">
+          <option value="Computer Science & Engineering" {% if user.department == 'Computer Science & Engineering' %}selected{% endif %}>Computer Science &amp; Engineering</option>
+          <option value="Mechanical Engineering" {% if user.department == 'Mechanical Engineering' %}selected{% endif %}>Mechanical Engineering</option>
+          <option value="Electronics & Communication" {% if user.department == 'Electronics & Communication' %}selected{% endif %}>Electronics &amp; Communication</option>
+          <option value="Civil Engineering" {% if user.department == 'Civil Engineering' %}selected{% endif %}>Civil Engineering</option>
+          <option value="Electrical & Electronics" {% if user.department == 'Electrical & Electronics' %}selected{% endif %}>Electrical &amp; Electronics</option>
+        </select>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="block font-black uppercase text-slate-700 mb-1 font-display">Year / Semester</label>
+          <input type="text" name="year" required value="{{ user.year }}" class="w-full p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 text-sm font-bold text-slate-900">
+        </div>
+        <div>
+          <label class="block font-black uppercase text-slate-700 mb-1 font-display">WhatsApp Phone</label>
+          <input type="text" name="phone" required value="{{ user.phone }}" class="w-full p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 text-sm font-bold text-slate-900 font-mono">
+        </div>
+      </div>
+
+      <div>
+        <label class="block font-black uppercase text-slate-700 mb-1 font-display">Hostel / Campus Pickup Location</label>
+        <input type="text" name="hostel" required value="{{ user.hostel }}" class="w-full p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 text-sm font-bold text-slate-900">
+      </div>
+
+      <div class="pt-2">
+        <button type="submit" class="w-full py-4 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-sm shadow-md btn-shimmer transition">
+          Save Profile Changes
+        </button>
+      </div>
+    </form>
+
+  </div>
+</div>
+{% endblock %}

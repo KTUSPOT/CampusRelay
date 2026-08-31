@@ -1,0 +1,331 @@
+{% extends "base.html" %}
+
+{% block title %}Sell an Item | Senior Listing Form | CampusKit{% endblock %}
+
+{% block content %}
+<div class="ambient-glow-bg py-12">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Header -->
+    <div class="text-center mb-8 space-y-2">
+      <div class="inline-flex items-center space-x-1.5 px-3.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-800 text-xs font-black uppercase tracking-widest font-display">
+        <i data-lucide="tag" class="w-3.5 h-3.5 text-emerald-600"></i>
+        <span>Senior Exchange Portal</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">List Your First-Year Equipment</h1>
+      <p class="text-xs sm:text-sm text-slate-500 max-w-md mx-auto font-medium">
+        Pass down unused drafters, drawing kits, calculators or textbooks to an incoming junior.
+      </p>
+    </div>
+
+    <!-- Quick Autofill Presets -->
+    <div class="bg-white/90 backdrop-blur-xl rounded-3xl border border-slate-200/90 p-5 mb-8 shadow-sm space-y-2.5">
+      <div class="flex items-center space-x-1.5 text-xs font-black uppercase tracking-widest text-slate-800 font-display">
+        <i data-lucide="zap" class="w-4 h-4 text-amber-500"></i>
+        <span>1-Click Test Templates:</span>
+      </div>
+      <div class="flex flex-wrap gap-2 text-xs">
+        <button type="button" onclick="fillTemplate('calc')" class="px-3.5 py-2 rounded-xl bg-slate-50 hover:bg-emerald-50 hover:text-emerald-800 hover:border-emerald-300 border border-slate-200 font-bold transition flex items-center space-x-1.5">
+          <span>🔢 Casio fx-991EX (₹1,100)</span>
+        </button>
+        <button type="button" onclick="fillTemplate('drafter')" class="px-3.5 py-2 rounded-xl bg-slate-50 hover:bg-emerald-50 hover:text-emerald-800 hover:border-emerald-300 border border-slate-200 font-bold transition flex items-center space-x-1.5">
+          <span>📐 Mini Drafter (₹550)</span>
+        </button>
+        <button type="button" onclick="fillTemplate('board')" class="px-3.5 py-2 rounded-xl bg-slate-50 hover:bg-emerald-50 hover:text-emerald-800 hover:border-emerald-300 border border-slate-200 font-bold transition flex items-center space-x-1.5">
+          <span>🪵 Drawing Board (₹650)</span>
+        </button>
+        <button type="button" onclick="fillTemplate('book')" class="px-3.5 py-2 rounded-xl bg-slate-50 hover:bg-emerald-50 hover:text-emerald-800 hover:border-emerald-300 border border-slate-200 font-bold transition flex items-center space-x-1.5">
+          <span>📚 Physics Textbook (₹280)</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Listing Form Card -->
+    <div class="bg-white rounded-3xl border border-slate-200/90 p-8 sm:p-12 shadow-premium">
+      
+      <form method="POST" action="/sell" enctype="multipart/form-data" class="space-y-6 text-xs font-semibold">
+        
+        <!-- Product Name -->
+        <div>
+          <label for="name" class="block font-black uppercase tracking-wider text-slate-700 mb-2 font-display">
+            Equipment Title <span class="text-rose-500">*</span>
+          </label>
+          <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            required 
+            placeholder="e.g. Casio fx-991ES Plus Scientific Calculator (2nd Gen)"
+            class="w-full p-4 rounded-2xl border border-slate-200 bg-slate-50/70 text-sm font-bold text-slate-900 focus:bg-white transition"
+          >
+        </div>
+
+        <!-- Category & Condition -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label for="category" class="block font-black uppercase tracking-wider text-slate-700 mb-2 font-display">
+              Category <span class="text-rose-500">*</span>
+            </label>
+            <select id="category" name="category" required class="w-full p-3.5 rounded-2xl border border-slate-200 bg-slate-50/70 text-xs font-bold text-slate-800 focus:bg-white transition">
+              <option value="Calculators">Calculators</option>
+              <option value="Mini Drafters">Mini Drafters</option>
+              <option value="Drawing Boards">Drawing Boards</option>
+              <option value="Drawing Kits">Drawing Kits</option>
+              <option value="Textbooks">Textbooks</option>
+              <option value="Reference Books">Reference Books</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="condition" class="block font-black uppercase tracking-wider text-slate-700 mb-2 font-display">
+              Condition <span class="text-rose-500">*</span>
+            </label>
+            <select id="condition" name="condition" required class="w-full p-3.5 rounded-2xl border border-slate-200 bg-slate-50/70 text-xs font-bold text-slate-800 focus:bg-white transition">
+              <option value="Like New">Like New (Mint condition, minimal use)</option>
+              <option value="Good" selected>Good (Minor use, 100% fully functional)</option>
+              <option value="Fair">Fair (Noticeable marks, completely usable)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Prices & Live Savings Indicator -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label for="price" class="block font-black uppercase tracking-wider text-slate-700 mb-2 font-display">
+              Selling Price (₹) <span class="text-rose-500">*</span>
+            </label>
+            <input 
+              type="number" 
+              id="price" 
+              name="price" 
+              step="10" 
+              required 
+              placeholder="e.g. 800"
+              oninput="calculateFormSavings()"
+              class="w-full p-4 rounded-2xl border border-slate-200 bg-slate-50/70 text-base font-black text-slate-900 focus:bg-white transition font-display"
+            >
+          </div>
+
+          <div>
+            <label for="original_price" class="block font-black uppercase tracking-wider text-slate-700 mb-2 font-display">
+              Original Retail Price (₹) <span class="text-rose-500">*</span>
+            </label>
+            <input 
+              type="number" 
+              id="original_price" 
+              name="original_price" 
+              step="10" 
+              required 
+              placeholder="e.g. 1500"
+              oninput="calculateFormSavings()"
+              class="w-full p-4 rounded-2xl border border-slate-200 bg-slate-50/70 text-base font-black text-slate-900 focus:bg-white transition font-display"
+            >
+          </div>
+        </div>
+
+        <!-- Dynamic Savings Preview Box -->
+        <div id="savings-preview-box" class="hidden p-4 rounded-2xl bg-gradient-to-r from-emerald-500/15 to-teal-500/15 border border-emerald-500/30 text-emerald-950 flex items-center justify-between shadow-xs">
+          <div class="flex items-center space-x-2">
+            <i data-lucide="sparkles" class="w-4 h-4 text-emerald-600"></i>
+            <span class="text-xs font-black font-display">Junior Savings Computed:</span>
+          </div>
+          <div class="text-right">
+            <span id="savings-text" class="text-base font-black text-emerald-700 font-display">₹0</span>
+            <span id="savings-percent" class="text-xs font-black bg-emerald-600 text-white px-2 py-0.5 rounded-full ml-1">0%</span>
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div>
+          <label for="description" class="block font-black uppercase tracking-wider text-slate-700 mb-2 font-display">
+            Description &amp; Highlights <span class="text-rose-500">*</span>
+          </label>
+          <textarea 
+            id="description" 
+            name="description" 
+            rows="4" 
+            required 
+            placeholder="Mention semesters used, included accessories (pouch, clamp, scale, lead boxes), working condition, etc."
+            class="w-full p-4 rounded-2xl border border-slate-200 bg-slate-50/70 text-xs font-medium text-slate-800 focus:bg-white transition"
+          ></textarea>
+        </div>
+
+        <!-- Product Image Selector -->
+        <div>
+          <label class="block font-black uppercase tracking-wider text-slate-700 mb-2 font-display">
+            Equipment Illustration / Photo <span class="text-rose-500">*</span>
+          </label>
+
+          <!-- Preset visual options -->
+          <div class="grid grid-cols-4 gap-3 mb-3" id="preset-selector">
+            <label class="cursor-pointer border-2 border-emerald-500 rounded-2xl p-3 bg-emerald-50/50 flex flex-col items-center text-center shadow-xs">
+              <input type="radio" name="image_preset" value="/static/images/sample/casio_calc.svg" checked class="hidden" onchange="selectPreset(this)">
+              <img src="/static/images/sample/casio_calc.svg" class="w-12 h-12 object-contain mb-1">
+              <span class="text-[10px] font-black text-slate-800">Calculator</span>
+            </label>
+            <label class="cursor-pointer border-2 border-slate-200 rounded-2xl p-3 hover:border-slate-300 flex flex-col items-center text-center">
+              <input type="radio" name="image_preset" value="/static/images/sample/mini_drafter.svg" class="hidden" onchange="selectPreset(this)">
+              <img src="/static/images/sample/mini_drafter.svg" class="w-12 h-12 object-contain mb-1">
+              <span class="text-[10px] font-black text-slate-800">Mini Drafter</span>
+            </label>
+            <label class="cursor-pointer border-2 border-slate-200 rounded-2xl p-3 hover:border-slate-300 flex flex-col items-center text-center">
+              <input type="radio" name="image_preset" value="/static/images/sample/drawing_board.svg" class="hidden" onchange="selectPreset(this)">
+              <img src="/static/images/sample/drawing_board.svg" class="w-12 h-12 object-contain mb-1">
+              <span class="text-[10px] font-black text-slate-800">Board</span>
+            </label>
+            <label class="cursor-pointer border-2 border-slate-200 rounded-2xl p-3 hover:border-slate-300 flex flex-col items-center text-center">
+              <input type="radio" name="image_preset" value="/static/images/sample/math_book.svg" class="hidden" onchange="selectPreset(this)">
+              <img src="/static/images/sample/math_book.svg" class="w-12 h-12 object-contain mb-1">
+              <span class="text-[10px] font-black text-slate-800">Book/Kit</span>
+            </label>
+          </div>
+
+          <div class="mt-2">
+            <input 
+              type="file" 
+              name="photo" 
+              accept="image/*"
+              class="w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-black file:bg-slate-100 file:text-slate-800 hover:file:bg-slate-200 cursor-pointer"
+            >
+            <span class="text-[11px] text-slate-400 block mt-1">Optional: Upload custom photo from phone camera or keep the high-res SVG preset.</span>
+          </div>
+        </div>
+
+        <!-- Campus Location & Phone -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2">
+          <div>
+            <label for="location" class="block font-black uppercase tracking-wider text-slate-700 mb-2 font-display">
+              Campus Pickup Location <span class="text-rose-500">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="location" 
+              name="location" 
+              required 
+              value="{{ current_user.hostel if current_user else 'Men\'s Hostel Block B (Room 214)' }}"
+              placeholder="e.g. Men's Hostel Block B (Room 214)"
+              class="w-full p-4 rounded-2xl border border-slate-200 bg-slate-50/70 text-xs font-bold text-slate-900 focus:bg-white transition"
+            >
+          </div>
+
+          <div>
+            <label for="phone" class="block font-black uppercase tracking-wider text-slate-700 mb-2 font-display">
+              WhatsApp Contact Number <span class="text-rose-500">*</span>
+            </label>
+            <input 
+              type="text" 
+              id="phone" 
+              name="phone" 
+              required 
+              value="{{ current_user.phone if current_user else '+919876543210' }}"
+              placeholder="+919876543210"
+              class="w-full p-4 rounded-2xl border border-slate-200 bg-slate-50/70 text-xs font-bold text-slate-900 focus:bg-white transition font-mono"
+            >
+          </div>
+        </div>
+
+        <!-- Department -->
+        <div>
+          <label for="department" class="block font-black uppercase tracking-wider text-slate-700 mb-2 font-display">
+            Your Department <span class="text-rose-500">*</span>
+          </label>
+          <select id="department" name="department" required class="w-full p-3.5 rounded-2xl border border-slate-200 bg-slate-50/70 text-xs font-bold text-slate-800 focus:bg-white transition">
+            <option value="Computer Science & Engineering" {% if current_user and current_user.department == 'Computer Science & Engineering' %}selected{% endif %}>Computer Science &amp; Engineering</option>
+            <option value="Mechanical Engineering" {% if current_user and current_user.department == 'Mechanical Engineering' %}selected{% endif %}>Mechanical Engineering</option>
+            <option value="Electronics & Communication" {% if current_user and current_user.department == 'Electronics & Communication' %}selected{% endif %}>Electronics &amp; Communication</option>
+            <option value="Civil Engineering" {% if current_user and current_user.department == 'Civil Engineering' %}selected{% endif %}>Civil Engineering</option>
+            <option value="Electrical & Electronics" {% if current_user and current_user.department == 'Electrical & Electronics' %}selected{% endif %}>Electrical &amp; Electronics</option>
+          </select>
+        </div>
+
+        <!-- Publish Button -->
+        <div class="pt-4">
+          <button 
+            type="submit" 
+            class="w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-sm tracking-wide shadow-lg shadow-emerald-600/25 btn-shimmer transition-all transform hover:-translate-y-0.5 flex items-center justify-center space-x-2"
+          >
+            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+            <span>Publish Listing to Marketplace</span>
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+</div>
+
+<script>
+function selectPreset(radio) {
+  const labels = document.querySelectorAll('#preset-selector label');
+  labels.forEach(l => {
+    l.classList.remove('border-emerald-500', 'bg-emerald-50/50', 'shadow-xs');
+    l.classList.add('border-slate-200');
+  });
+  radio.parentElement.classList.remove('border-slate-200');
+  radio.parentElement.classList.add('border-emerald-500', 'bg-emerald-50/50', 'shadow-xs');
+}
+
+function fillTemplate(type) {
+  const templates = {
+    calc: {
+      name: "Casio fx-991EX ClassWiz Scientific Calculator",
+      category: "Calculators",
+      condition: "Like New",
+      price: 1100,
+      original_price: 2200,
+      description: "High-resolution icon menu LCD, 552 functions, matrix & spreadsheet calculations. Perfect for S1 & S2 Engineering Mathematics. Fresh battery with case.",
+      preset: "/static/images/sample/casio_calc.svg"
+    },
+    drafter: {
+      name: "Omega Engineering Mini Drafter (Stainless Steel Arm)",
+      category: "Mini Drafters",
+      condition: "Good",
+      price: 550,
+      original_price: 1200,
+      description: "Includes unbreakable transparent protractor head with mm markings. Clamping screw in mint condition. Ideal for S1 Engineering Graphics.",
+      preset: "/static/images/sample/mini_drafter.svg"
+    },
+    board: {
+      name: "Imperial D2 Pine Wood Drawing Board (800x600 mm)",
+      category: "Drawing Boards",
+      condition: "Good",
+      price: 650,
+      original_price: 1350,
+      description: "Smooth pine board with straight ebony working edge. No cracks or bending. Perfect for EG sheets.",
+      preset: "/static/images/sample/drawing_board.svg"
+    },
+    book: {
+      name: "Engineering Physics Textbook (S1/S2 Common Core)",
+      category: "Textbooks",
+      condition: "Good",
+      price: 280,
+      original_price: 750,
+      description: "Covers Optics, Quantum Mechanics, and Fiber Optics. Clean pages with highlighted key formulas.",
+      preset: "/static/images/sample/math_book.svg"
+    }
+  };
+
+  const item = templates[type];
+  if (!item) return;
+
+  document.getElementById('name').value = item.name;
+  document.getElementById('category').value = item.category;
+  document.getElementById('condition').value = item.condition;
+  document.getElementById('price').value = item.price;
+  document.getElementById('original_price').value = item.original_price;
+  document.getElementById('description').value = item.description;
+
+  const radio = document.querySelector(`input[name="image_preset"][value="${item.preset}"]`);
+  if (radio) {
+    radio.checked = true;
+    selectPreset(radio);
+  }
+
+  calculateFormSavings();
+  showToast(`Autofilled template for ${item.name}`, 'info');
+}
+</script>
+{% endblock %}
