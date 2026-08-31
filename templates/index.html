@@ -1,0 +1,395 @@
+{% extends "base.html" %}
+
+{% block title %}CampusKit | Pass it down. Save money. Reduce waste.{% endblock %}
+
+{% block content %}
+<!-- Hero Section (Ambient Glow & Luxury Glass Aesthetics) -->
+<section class="relative overflow-hidden ambient-glow-bg pt-12 pb-24 border-b border-slate-200/80">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      
+      <!-- Left Hero Content -->
+      <div class="lg:col-span-7 space-y-7 text-center lg:text-left">
+        
+        <div class="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-emerald-800 text-xs font-black tracking-wide shadow-xs">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-600 animate-pulse"></i>
+          <span>CAMPUS ENGINEERING EXCHANGE</span>
+        </div>
+
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.08] font-display">
+          Pass it down.<br>
+          <span class="text-gradient-emerald">Save money.</span><br>
+          Reduce waste.
+        </h1>
+
+        <p class="text-base sm:text-lg text-slate-600 max-w-2xl font-normal leading-relaxed">
+          First-year engineering equipment (mini drafters, drawing boards, Casio calculators, S1/S2 reference books) is expensive and only used for 2 semesters. Buy directly from seniors on campus at up to <b class="text-slate-900 font-bold">60% off</b>.
+        </p>
+
+        <!-- CTA Action Buttons -->
+        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+          <a href="/marketplace" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-sm tracking-wide shadow-lg shadow-emerald-600/30 btn-shimmer transition-all transform hover:-translate-y-0.5 flex items-center justify-center space-x-2.5">
+            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+            <span>Browse Available Items</span>
+          </a>
+          
+          <a href="/sell" class="w-full sm:w-auto px-8 py-4 rounded-2xl bg-white hover:bg-slate-50 text-slate-800 font-black text-sm border border-slate-300/80 shadow-xs hover:shadow-sm transition-all flex items-center justify-center space-x-2">
+            <i data-lucide="tag" class="w-4 h-4 text-emerald-600"></i>
+            <span>Sell Unused Item</span>
+          </a>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="pt-3 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs font-bold text-slate-500">
+          <div class="flex items-center space-x-2">
+            <div class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center"><i data-lucide="check" class="w-3.5 h-3.5"></i></div>
+            <span>0% Commission (Free)</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <div class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i></div>
+            <span>Campus Pickup (Hostel/Gate)</span>
+          </div>
+          <div class="flex items-center space-x-2">
+            <div class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center"><i data-lucide="message-circle" class="w-3.5 h-3.5"></i></div>
+            <span>Instant WhatsApp Chat</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Right Hero Visual / Interactive Savings Calculator Preview -->
+      <div class="lg:col-span-5">
+        <div class="relative mx-auto max-w-md bg-white/90 backdrop-blur-xl rounded-3xl p-6 sm:p-8 shadow-premium border border-slate-200/90 space-y-6">
+          
+          <!-- Header -->
+          <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center shadow-xs">
+                <i data-lucide="calculator" class="w-5 h-5"></i>
+              </div>
+              <div>
+                <span class="text-xs font-black uppercase text-slate-900 tracking-wider font-display block">S1 / S2 Starter Bundle</span>
+                <span class="text-[10px] text-slate-400 font-semibold">Typical First-Year Requirement</span>
+              </div>
+            </div>
+            <span class="px-3 py-1 rounded-full text-xs font-black bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-xs">Save 52%</span>
+          </div>
+
+          <!-- Price comparison list -->
+          <div class="space-y-3.5 text-xs font-semibold">
+            <div class="flex justify-between items-center text-slate-600 bg-slate-50/70 p-2.5 rounded-xl border border-slate-100">
+              <span class="text-slate-800">Casio fx-991ES Plus Calculator</span>
+              <div class="text-right">
+                <span class="line-through text-slate-400 mr-1.5">₹1,500</span>
+                <span class="font-extrabold text-emerald-700 text-sm">₹800</span>
+              </div>
+            </div>
+            
+            <div class="flex justify-between items-center text-slate-600 bg-slate-50/70 p-2.5 rounded-xl border border-slate-100">
+              <span class="text-slate-800">Omega Mini Drafter + Bag</span>
+              <div class="text-right">
+                <span class="line-through text-slate-400 mr-1.5">₹1,250</span>
+                <span class="font-extrabold text-emerald-700 text-sm">₹600</span>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-center text-slate-600 bg-slate-50/70 p-2.5 rounded-xl border border-slate-100">
+              <span class="text-slate-800">Imperial D2 Wooden Board</span>
+              <div class="text-right">
+                <span class="line-through text-slate-400 mr-1.5">₹1,400</span>
+                <span class="font-extrabold text-emerald-700 text-sm">₹700</span>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-center text-slate-600 bg-slate-50/70 p-2.5 rounded-xl border border-slate-100">
+              <span class="text-slate-800">Complete Instrument Kit</span>
+              <div class="text-right">
+                <span class="line-through text-slate-400 mr-1.5">₹850</span>
+                <span class="font-extrabold text-emerald-700 text-sm">₹400</span>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-center text-slate-600 bg-slate-50/70 p-2.5 rounded-xl border border-slate-100">
+              <span class="text-slate-800">B.S. Grewal Mathematics</span>
+              <div class="text-right">
+                <span class="line-through text-slate-400 mr-1.5">₹899</span>
+                <span class="font-extrabold text-emerald-700 text-sm">₹350</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Total Calculation Card -->
+          <div class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 rounded-2xl p-5 text-white shadow-md">
+            <div class="flex justify-between items-end">
+              <div>
+                <span class="text-[10px] font-bold text-emerald-400 uppercase tracking-widest block">CampusKit Total</span>
+                <div class="text-2xl font-black font-display tracking-tight">₹2,850</div>
+                <div class="text-[11px] text-slate-400 line-through">Store Retail: ₹5,899</div>
+              </div>
+              <div class="text-right">
+                <span class="text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full uppercase">Your Savings</span>
+                <div class="text-2xl font-black text-amber-300 font-display">₹3,049</div>
+              </div>
+            </div>
+          </div>
+
+          <a href="/marketplace" class="block text-center py-3 text-xs font-black text-emerald-700 hover:text-emerald-800 bg-emerald-50 hover:bg-emerald-100/80 rounded-xl transition">
+            Explore All First-Year Listings &rarr;
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Live Statistics Bar (Floating Glass Luxury) -->
+<section class="py-12 bg-white border-b border-slate-200/80">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+      
+      <div class="p-6 rounded-3xl bg-slate-50/80 border border-slate-200/80 shadow-xs text-center space-y-1 hover:border-emerald-200 transition">
+        <div class="text-3xl sm:text-4xl font-black text-slate-900 font-display">{{ stats.total_listings }}</div>
+        <div class="text-xs font-extrabold text-emerald-600 uppercase tracking-wider">Items Listed</div>
+      </div>
+
+      <div class="p-6 rounded-3xl bg-slate-50/80 border border-slate-200/80 shadow-xs text-center space-y-1 hover:border-emerald-200 transition">
+        <div class="text-3xl sm:text-4xl font-black text-slate-900 font-display">{{ stats.sold_items }}</div>
+        <div class="text-xs font-extrabold text-emerald-600 uppercase tracking-wider">Items Sold</div>
+      </div>
+
+      <div class="p-6 rounded-3xl bg-slate-50/80 border border-slate-200/80 shadow-xs text-center space-y-1 hover:border-emerald-200 transition">
+        <div class="text-3xl sm:text-4xl font-black text-slate-900 font-display">{{ stats.total_users }}</div>
+        <div class="text-xs font-extrabold text-emerald-600 uppercase tracking-wider">Students Helped</div>
+      </div>
+
+      <div class="p-6 rounded-3xl bg-slate-50/80 border border-slate-200/80 shadow-xs text-center space-y-1 hover:border-emerald-200 transition">
+        <div class="text-3xl sm:text-4xl font-black text-emerald-600 font-display">₹{{ "{:,.0f}".format(stats.total_savings) }}</div>
+        <div class="text-xs font-extrabold text-slate-600 uppercase tracking-wider">Total Money Saved</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- The Problem & Solution -->
+<section class="py-20 bg-slate-50/50 border-b border-slate-200/80">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-3xl mx-auto mb-14 space-y-2">
+      <h2 class="text-xs font-black uppercase tracking-widest text-emerald-600 font-display">The Campus Problem</h2>
+      <h3 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">
+        Why buy expensive new gear when seniors have it sitting in hostel rooms?
+      </h3>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      
+      <!-- Problem Card -->
+      <div class="p-8 sm:p-10 rounded-3xl bg-white border border-rose-100 shadow-sm relative overflow-hidden space-y-5">
+        <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center shadow-xs">
+          <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+        </div>
+        <h4 class="text-xl font-bold text-slate-900 font-display">The First-Year Burden</h4>
+        <ul class="space-y-3.5 text-xs sm:text-sm text-slate-600 font-medium">
+          <li class="flex items-start space-x-2.5">
+            <span class="text-rose-500 font-black">✕</span>
+            <span>First-years spend <b>₹6,000 to ₹9,000</b> on drawing instruments, drafters, and reference books in the first 2 weeks.</span>
+          </li>
+          <li class="flex items-start space-x-2.5">
+            <span class="text-rose-500 font-black">✕</span>
+            <span>These items are only required for S1/S2 Engineering Graphics & Maths, then sit unused in cupboards.</span>
+          </li>
+          <li class="flex items-start space-x-2.5">
+            <span class="text-rose-500 font-black">✕</span>
+            <span>No trusted college-level channel to connect juniors with seniors across different hostel blocks.</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Solution Card -->
+      <div class="p-8 sm:p-10 rounded-3xl bg-white border border-emerald-100 shadow-sm relative overflow-hidden space-y-5">
+        <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shadow-xs">
+          <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+        </div>
+        <h4 class="text-xl font-bold text-slate-900 font-display">The CampusKit Solution</h4>
+        <ul class="space-y-3.5 text-xs sm:text-sm text-slate-600 font-medium">
+          <li class="flex items-start space-x-2.5">
+            <span class="text-emerald-500 font-black">✓</span>
+            <span>Juniors get clean, functional gear at <b>40% to 60% discount</b> directly on campus.</span>
+          </li>
+          <li class="flex items-start space-x-2.5">
+            <span class="text-emerald-500 font-black">✓</span>
+            <span>Seniors instantly recover cash for equipment gathering dust in their lockers.</span>
+          </li>
+          <li class="flex items-start space-x-2.5">
+            <span class="text-emerald-500 font-black">✓</span>
+            <span>Zero courier wait or shipping charges — meet directly at the college canteen, hostel, or department.</span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- How It Works (5-Step Visual Timeline) -->
+<section class="py-20 bg-white border-b border-slate-200/80">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16 space-y-2">
+      <h2 class="text-xs font-black uppercase tracking-widest text-emerald-600 font-display">Seamless Campus Exchange</h2>
+      <h3 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">How It Works in 5 Easy Steps</h3>
+      <p class="text-slate-600 text-xs sm:text-sm font-medium">A direct senior-to-junior handshake right inside the campus.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+      
+      <!-- Step 1 -->
+      <div class="bg-slate-50/70 rounded-3xl p-6 border border-slate-200/80 text-center relative group hover:bg-emerald-50/60 hover:border-emerald-300 transition shadow-xs">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white font-black text-base flex items-center justify-center mx-auto mb-4 shadow-md shadow-emerald-500/20 font-display">
+          1
+        </div>
+        <h4 class="font-bold text-slate-900 text-sm mb-1.5 font-display">Senior Lists Item</h4>
+        <p class="text-xs text-slate-500 leading-relaxed">Senior snaps photo of unused calculator, drafter, or book in 60 seconds.</p>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="bg-slate-50/70 rounded-3xl p-6 border border-slate-200/80 text-center relative group hover:bg-emerald-50/60 hover:border-emerald-300 transition shadow-xs">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white font-black text-base flex items-center justify-center mx-auto mb-4 shadow-md shadow-emerald-500/20 font-display">
+          2
+        </div>
+        <h4 class="font-bold text-slate-900 text-sm mb-1.5 font-display">Junior Finds Item</h4>
+        <p class="text-xs text-slate-500 leading-relaxed">Junior browses listings filtered by department, price, or hostel location.</p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="bg-slate-50/70 rounded-3xl p-6 border border-slate-200/80 text-center relative group hover:bg-emerald-50/60 hover:border-emerald-300 transition shadow-xs">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white font-black text-base flex items-center justify-center mx-auto mb-4 shadow-md shadow-emerald-500/20 font-display">
+          3
+        </div>
+        <h4 class="font-bold text-slate-900 text-sm mb-1.5 font-display">Direct Contact</h4>
+        <p class="text-xs text-slate-500 leading-relaxed">Buyer clicks WhatsApp button or reserves item with a quick pickup note.</p>
+      </div>
+
+      <!-- Step 4 -->
+      <div class="bg-slate-50/70 rounded-3xl p-6 border border-slate-200/80 text-center relative group hover:bg-emerald-50/60 hover:border-emerald-300 transition shadow-xs">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white font-black text-base flex items-center justify-center mx-auto mb-4 shadow-md shadow-emerald-500/20 font-display">
+          4
+        </div>
+        <h4 class="font-bold text-slate-900 text-sm mb-1.5 font-display">Meet on Campus</h4>
+        <p class="text-xs text-slate-500 leading-relaxed">They coordinate a convenient spot like Men's Hostel, Canteen, or Library.</p>
+      </div>
+
+      <!-- Step 5 -->
+      <div class="bg-slate-50/70 rounded-3xl p-6 border border-slate-200/80 text-center relative group hover:bg-emerald-50/60 hover:border-emerald-300 transition shadow-xs">
+        <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 text-white font-black text-base flex items-center justify-center mx-auto mb-4 shadow-md shadow-emerald-500/20 font-display">
+          5
+        </div>
+        <h4 class="font-bold text-slate-900 text-sm mb-1.5 font-display">Item Handover</h4>
+        <p class="text-xs text-slate-500 leading-relaxed">In-person inspection done, cash/UPI paid, and listing marked Sold.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Featured First-Year Listings Grid -->
+<section class="py-20 ambient-glow-bg">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12">
+      <div>
+        <h2 class="text-xs font-black uppercase tracking-widest text-emerald-600 font-display mb-1.5">Live on Campus Store</h2>
+        <h3 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">Featured First-Year Essentials</h3>
+      </div>
+      <a href="/marketplace" class="mt-4 sm:mt-0 text-xs font-black text-emerald-700 hover:text-emerald-800 flex items-center space-x-1.5 uppercase tracking-wider">
+        <span>View all {{ stats.total_listings }} items</span>
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </a>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      {% for product in featured_products %}
+        <div class="bg-white rounded-3xl border border-slate-200/90 overflow-hidden shadow-premium-hover flex flex-col justify-between group">
+          <div>
+            <!-- Image Frame -->
+            <div class="relative aspect-square bg-slate-50/80 p-6 flex items-center justify-center border-b border-slate-100">
+              <img src="{{ product.image_url }}" alt="{{ product.name }}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
+              
+              <!-- Savings Pill -->
+              {% if product.savings > 0 %}
+                <span class="absolute top-3.5 left-3.5 px-2.5 py-1 rounded-full text-[10px] font-black savings-pill">
+                  Save ₹{{ "{:,.0f}".format(product.savings) }} ({{ product.savings_percent }}%)
+                </span>
+              {% endif %}
+
+              <!-- Status Badge -->
+              <span class="absolute top-3.5 right-3.5 px-2.5 py-1 rounded-full text-[10px] font-black {% if product.status == 'available' %}badge-available{% elif product.status == 'reserved' %}badge-reserved{% else %}badge-sold{% endif %}">
+                {{ product.status.capitalize() }}
+              </span>
+            </div>
+
+            <!-- Content -->
+            <div class="p-5 space-y-3">
+              <div class="flex items-center justify-between text-xs">
+                <span class="px-2 py-0.5 rounded-md bg-slate-100 font-extrabold text-slate-700 text-[10.5px]">{{ product.category }}</span>
+                <span class="font-bold text-emerald-700 text-[11px]">{{ product.condition }}</span>
+              </div>
+
+              <h4 class="font-bold text-slate-900 text-sm line-clamp-2 leading-snug hover:text-emerald-600 transition font-display">
+                <a href="/product/{{ product.id }}">{{ product.name }}</a>
+              </h4>
+
+              <div class="text-[11px] text-slate-500 space-y-1 font-medium">
+                <div class="flex items-center space-x-1.5">
+                  <i data-lucide="user" class="w-3.5 h-3.5 text-slate-400"></i>
+                  <span>{{ product.seller_year }} • {{ product.department.split()[0] }}</span>
+                </div>
+                <div class="flex items-center space-x-1.5 truncate">
+                  <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-400"></i>
+                  <span class="truncate">{{ product.location }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Price & Action Footer -->
+          <div class="p-5 pt-0 border-t border-slate-100 flex items-center justify-between mt-2">
+            <div>
+              <div class="text-lg font-black text-slate-900 font-display">₹{{ "{:,.0f}".format(product.price) }}</div>
+              {% if product.original_price > product.price %}
+                <div class="text-[11px] line-through text-slate-400 font-semibold">Orig: ₹{{ "{:,.0f}".format(product.original_price) }}</div>
+              {% endif %}
+            </div>
+            
+            <a href="/product/{{ product.id }}" class="px-4 py-2 rounded-xl text-xs font-black bg-slate-900 hover:bg-emerald-600 text-white transition">
+              View
+            </a>
+          </div>
+
+        </div>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+
+<!-- Call to Action Banner (Obsidian Luxury) -->
+<section class="py-20 bg-surface-950 text-white relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6 relative z-10">
+    <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+      <span>CAMPUS SENIOR HUB</span>
+    </div>
+    <h3 class="text-3xl sm:text-4xl lg:text-5xl font-black font-display tracking-tight">Got engineering gear sitting in your hostel?</h3>
+    <p class="text-slate-400 max-w-xl mx-auto text-sm sm:text-base font-normal leading-relaxed">
+      List your mini drafters, calculators, or S1/S2 reference books in under 2 minutes and help an incoming first-year junior.
+    </p>
+    <div class="pt-3">
+      <a href="/sell" class="inline-flex items-center space-x-2 px-8 py-4 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-black text-sm hover:from-emerald-600 hover:to-teal-600 shadow-lg shadow-emerald-500/25 btn-shimmer transition-all transform hover:-translate-y-0.5">
+        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+        <span>List an Item Now (Free)</span>
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

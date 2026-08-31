@@ -1,0 +1,293 @@
+{% extends "base.html" %}
+
+{% block title %}Marketplace | Browse Engineering Items | CampusKit{% endblock %}
+
+{% block content %}
+<div class="ambient-glow-bg border-b border-slate-200/80 py-10">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+      <div>
+        <div class="inline-flex items-center space-x-1.5 text-xs font-black uppercase tracking-widest text-emerald-700 font-display mb-1">
+          <i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-600"></i>
+          <span>CAMPUS VERIFIED LISTINGS</span>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight font-display">Campus Marketplace</h1>
+        <p class="text-slate-500 text-xs sm:text-sm mt-1 font-medium">Browse verified equipment from seniors across all hostel blocks and branches.</p>
+      </div>
+      
+      <div class="flex items-center space-x-3">
+        <a href="/sell" class="inline-flex items-center space-x-2 px-5 py-3 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-black text-xs shadow-md shadow-emerald-600/20 btn-shimmer transition-all transform hover:-translate-y-0.5">
+          <i data-lucide="plus" class="w-4 h-4"></i>
+          <span>Sell an Item</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Search & Quick Category Chips -->
+    <div class="mt-8 space-y-4">
+      <!-- Search Input Form -->
+      <form method="GET" action="/marketplace" class="relative flex items-center">
+        <i data-lucide="search" class="w-5 h-5 text-slate-400 absolute left-4 pointer-events-none"></i>
+        <input 
+          type="text" 
+          name="search" 
+          value="{{ current_filters.search or '' }}" 
+          placeholder="Search by product name (e.g. Casio fx-991, Mini drafter, B.S. Grewal, Drawing board)..."
+          class="w-full pl-12 pr-28 py-4 bg-white/90 backdrop-blur-md border border-slate-200/90 rounded-2xl text-xs sm:text-sm font-semibold focus:outline-none focus:ring-4 focus:ring-emerald-500/15 focus:border-emerald-500 shadow-sm transition"
+        >
+        {% if current_filters.category and current_filters.category != 'All' %}
+          <input type="hidden" name="category" value="{{ current_filters.category }}">
+        {% endif %}
+        {% if current_filters.sort_by %}
+          <input type="hidden" name="sort" value="{{ current_filters.sort_by }}">
+        {% endif %}
+        
+        <button type="submit" class="absolute right-2 px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-emerald-600 text-white text-xs font-black transition">
+          Search
+        </button>
+      </form>
+
+      <!-- Category Filter Tabs -->
+      <div class="flex items-center space-x-2 overflow-x-auto pb-2 scrollbar-none text-xs font-bold">
+        {% set categories = [
+          ('All', 'All Categories'),
+          ('Calculators', 'Calculators'),
+          ('Mini Drafters', 'Mini Drafters'),
+          ('Drawing Boards', 'Drawing Boards'),
+          ('Drawing Kits', 'Drawing Kits'),
+          ('Textbooks', 'Textbooks'),
+          ('Reference Books', 'Reference Books'),
+          ('Other', 'Other')
+        ] %}
+
+        {% for cat_val, cat_label in categories %}
+          <a 
+            href="/marketplace?category={{ cat_val }}{% if current_filters.search %}&search={{ current_filters.search }}{% endif %}{% if current_filters.sort_by %}&sort={{ current_filters.sort_by }}{% endif %}"
+            class="px-4 py-2.5 rounded-xl whitespace-nowrap transition {% if (current_filters.category == cat_val) or (not current_filters.category and cat_val == 'All') %}bg-slate-900 text-white shadow-xs font-extrabold{% else %}bg-white/80 border border-slate-200/80 text-slate-700 hover:bg-slate-100{% endif %}"
+          >
+            {{ cat_label }}
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Main Marketplace Layout -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+  <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+    
+    <!-- Sidebar Filter Panel -->
+    <div class="lg:col-span-1">
+      <div class="bg-white rounded-3xl border border-slate-200/90 p-6 space-y-6 shadow-sm sticky top-28">
+        
+        <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+          <div class="flex items-center space-x-2 font-black text-xs uppercase tracking-widest text-slate-800 font-display">
+            <i data-lucide="sliders-horizontal" class="w-4 h-4 text-emerald-600"></i>
+            <span>Filter Criteria</span>
+          </div>
+          <a href="/marketplace" class="text-xs font-extrabold text-slate-400 hover:text-rose-600 transition">Reset</a>
+        </div>
+
+        <form method="GET" action="/marketplace" id="filter-form" class="space-y-5 text-xs">
+          {% if current_filters.search %}
+            <input type="hidden" name="search" value="{{ current_filters.search }}">
+          {% endif %}
+          
+          <!-- Category -->
+          <div>
+            <label class="block font-black text-slate-700 uppercase tracking-wider mb-2 font-display">Category</label>
+            <select name="category" onchange="document.getElementById('filter-form').submit()" class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50/70 font-semibold focus:ring-2 focus:ring-emerald-500">
+              <option value="All" {% if not current_filters.category or current_filters.category == 'All' %}selected{% endif %}>All Categories</option>
+              <option value="Calculators" {% if current_filters.category == 'Calculators' %}selected{% endif %}>Calculators</option>
+              <option value="Mini Drafters" {% if current_filters.category == 'Mini Drafters' %}selected{% endif %}>Mini Drafters</option>
+              <option value="Drawing Boards" {% if current_filters.category == 'Drawing Boards' %}selected{% endif %}>Drawing Boards</option>
+              <option value="Drawing Kits" {% if current_filters.category == 'Drawing Kits' %}selected{% endif %}>Drawing Kits</option>
+              <option value="Textbooks" {% if current_filters.category == 'Textbooks' %}selected{% endif %}>Textbooks</option>
+              <option value="Reference Books" {% if current_filters.category == 'Reference Books' %}selected{% endif %}>Reference Books</option>
+              <option value="Other" {% if current_filters.category == 'Other' %}selected{% endif %}>Other</option>
+            </select>
+          </div>
+
+          <!-- Condition -->
+          <div>
+            <label class="block font-black text-slate-700 uppercase tracking-wider mb-2 font-display">Condition</label>
+            <select name="condition" onchange="document.getElementById('filter-form').submit()" class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50/70 font-semibold focus:ring-2 focus:ring-emerald-500">
+              <option value="All" {% if not current_filters.condition or current_filters.condition == 'All' %}selected{% endif %}>Any Condition</option>
+              <option value="Like New" {% if current_filters.condition == 'Like New' %}selected{% endif %}>Like New</option>
+              <option value="Good" {% if current_filters.condition == 'Good' %}selected{% endif %}>Good</option>
+              <option value="Fair" {% if current_filters.condition == 'Fair' %}selected{% endif %}>Fair</option>
+            </select>
+          </div>
+
+          <!-- Department -->
+          <div>
+            <label class="block font-black text-slate-700 uppercase tracking-wider mb-2 font-display">Department</label>
+            <select name="department" onchange="document.getElementById('filter-form').submit()" class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50/70 font-semibold focus:ring-2 focus:ring-emerald-500">
+              <option value="All" {% if not current_filters.department or current_filters.department == 'All' %}selected{% endif %}>All Engineering Branches</option>
+              <option value="Computer Science & Engineering" {% if current_filters.department == 'Computer Science & Engineering' %}selected{% endif %}>Computer Science (CSE)</option>
+              <option value="Mechanical Engineering" {% if current_filters.department == 'Mechanical Engineering' %}selected{% endif %}>Mechanical (ME)</option>
+              <option value="Electronics & Communication" {% if current_filters.department == 'Electronics & Communication' %}selected{% endif %}>Electronics (ECE)</option>
+              <option value="Civil Engineering" {% if current_filters.department == 'Civil Engineering' %}selected{% endif %}>Civil Engineering (CE)</option>
+              <option value="Electrical & Electronics" {% if current_filters.department == 'Electrical & Electronics' %}selected{% endif %}>Electrical (EEE)</option>
+            </select>
+          </div>
+
+          <!-- Hostel / Pickup Location -->
+          <div>
+            <label class="block font-black text-slate-700 uppercase tracking-wider mb-2 font-display">Campus Location</label>
+            <select name="location" onchange="document.getElementById('filter-form').submit()" class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50/70 font-semibold focus:ring-2 focus:ring-emerald-500">
+              <option value="All" {% if not current_filters.location or current_filters.location == 'All' %}selected{% endif %}>All Locations</option>
+              <option value="Men's Hostel" {% if current_filters.location == "Men's Hostel" %}selected{% endif %}>Men's Hostel Blocks</option>
+              <option value="Women's Hostel" {% if current_filters.location == "Women's Hostel" %}selected{% endif %}>Women's Hostel Blocks</option>
+              <option value="Day Scholar" {% if current_filters.location == "Day Scholar" %}selected{% endif %}>Day Scholar / Near Gate</option>
+            </select>
+          </div>
+
+          <!-- Availability Status -->
+          <div>
+            <label class="block font-black text-slate-700 uppercase tracking-wider mb-2 font-display">Availability</label>
+            <select name="status" onchange="document.getElementById('filter-form').submit()" class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50/70 font-semibold focus:ring-2 focus:ring-emerald-500">
+              <option value="All" {% if not current_filters.status or current_filters.status == 'All' %}selected{% endif %}>All (Available &amp; Sold)</option>
+              <option value="available" {% if current_filters.status == 'available' %}selected{% endif %}>Available Only</option>
+              <option value="reserved" {% if current_filters.status == 'reserved' %}selected{% endif %}>Reserved</option>
+              <option value="sold" {% if current_filters.status == 'sold' %}selected{% endif %}>Sold</option>
+            </select>
+          </div>
+
+          <!-- Max Price Filter -->
+          <div>
+            <label class="block font-black text-slate-700 uppercase tracking-wider mb-2 font-display">Max Price (₹)</label>
+            <div class="flex items-center space-x-2">
+              <input 
+                type="number" 
+                name="max_price" 
+                value="{{ current_filters.max_price or '' }}" 
+                placeholder="e.g. 1000" 
+                class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50/70 font-semibold focus:ring-2 focus:ring-emerald-500"
+              >
+              <button type="submit" class="p-3 bg-emerald-600 text-white rounded-xl hover:bg-emerald-700 shadow-xs">
+                <i data-lucide="check" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Sorting -->
+          <div>
+            <label class="block font-black text-slate-700 uppercase tracking-wider mb-2 font-display">Sort By</label>
+            <select name="sort" onchange="document.getElementById('filter-form').submit()" class="w-full p-3 rounded-xl border border-slate-200 bg-slate-50/70 font-semibold focus:ring-2 focus:ring-emerald-500">
+              <option value="newest" {% if not current_filters.sort_by or current_filters.sort_by == 'newest' %}selected{% endif %}>Newest First</option>
+              <option value="price_asc" {% if current_filters.sort_by == 'price_asc' %}selected{% endif %}>Price: Low → High</option>
+              <option value="price_desc" {% if current_filters.sort_by == 'price_desc' %}selected{% endif %}>Price: High → Low</option>
+              <option value="savings_desc" {% if current_filters.sort_by == 'savings_desc' %}selected{% endif %}>Highest Savings (₹)</option>
+            </select>
+          </div>
+
+        </form>
+
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div class="lg:col-span-3">
+      
+      <!-- Summary Bar -->
+      <div class="flex items-center justify-between mb-6 text-xs font-bold text-slate-500">
+        <div>
+          Showing <span class="text-slate-900 font-extrabold">{{ products|length }}</span> listings
+          {% if current_filters.search %} matching "<span class="text-emerald-700">{{ current_filters.search }}</span>"{% endif %}
+          {% if current_filters.category and current_filters.category != 'All' %} in <span class="text-emerald-700">{{ current_filters.category }}</span>{% endif %}
+        </div>
+      </div>
+
+      {% if products %}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {% for product in products %}
+            <div class="bg-white rounded-3xl border border-slate-200/90 overflow-hidden shadow-premium-hover flex flex-col justify-between group">
+              <div>
+                <!-- Image Container -->
+                <div class="relative aspect-square bg-slate-50/80 p-6 flex items-center justify-center border-b border-slate-100">
+                  <img src="{{ product.image_url }}" alt="{{ product.name }}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300">
+                  
+                  <!-- Savings Pill -->
+                  {% if product.savings > 0 %}
+                    <span class="absolute top-3.5 left-3.5 px-2.5 py-1 rounded-full text-[10px] font-black savings-pill">
+                      Save ₹{{ "{:,.0f}".format(product.savings) }} ({{ product.savings_percent }}%)
+                    </span>
+                  {% endif %}
+
+                  <!-- Status Badge -->
+                  <span class="absolute top-3.5 right-3.5 px-2.5 py-1 rounded-full text-[10px] font-black {% if product.status == 'available' %}badge-available{% elif product.status == 'reserved' %}badge-reserved{% else %}badge-sold{% endif %}">
+                    {{ product.status.capitalize() }}
+                  </span>
+                </div>
+
+                <!-- Product Content -->
+                <div class="p-5 space-y-3">
+                  <div class="flex items-center justify-between text-xs">
+                    <span class="px-2.5 py-0.5 rounded-md bg-slate-100 font-extrabold text-slate-700 text-[10px]">{{ product.category }}</span>
+                    <span class="font-extrabold text-[11px] {% if product.condition == 'Like New' %}text-emerald-600{% elif product.condition == 'Good' %}text-blue-600{% else %}text-orange-600{% endif %}">
+                      {{ product.condition }}
+                    </span>
+                  </div>
+
+                  <h3 class="font-bold text-slate-900 text-sm line-clamp-2 leading-snug hover:text-emerald-600 transition font-display">
+                    <a href="/product/{{ product.id }}">{{ product.name }}</a>
+                  </h3>
+
+                  <div class="text-[11px] text-slate-500 space-y-1 font-medium pt-1">
+                    <div class="flex items-center space-x-1.5">
+                      <i data-lucide="user" class="w-3.5 h-3.5 text-slate-400"></i>
+                      <span>{{ product.seller_name }} ({{ product.seller_year }})</span>
+                    </div>
+                    <div class="flex items-center space-x-1.5 truncate">
+                      <i data-lucide="map-pin" class="w-3.5 h-3.5 text-slate-400"></i>
+                      <span class="truncate">{{ product.location }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card Bottom Action -->
+              <div class="p-5 pt-0 border-t border-slate-100 flex items-center justify-between mt-2">
+                <div>
+                  <div class="text-xl font-black text-slate-900 font-display">₹{{ "{:,.0f}".format(product.price) }}</div>
+                  {% if product.original_price > product.price %}
+                    <div class="text-[11px] line-through text-slate-400 font-semibold">Orig: ₹{{ "{:,.0f}".format(product.original_price) }}</div>
+                  {% endif %}
+                </div>
+                
+                <a href="/product/{{ product.id }}" class="px-4 py-2 rounded-xl text-xs font-black bg-slate-900 hover:bg-emerald-600 text-white shadow-xs transition">
+                  Details
+                </a>
+              </div>
+
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <!-- Empty State -->
+        <div class="bg-white rounded-3xl border border-slate-200/90 p-12 text-center space-y-4 shadow-sm">
+          <div class="w-16 h-16 rounded-3xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto shadow-xs">
+            <i data-lucide="search-x" class="w-8 h-8"></i>
+          </div>
+          <h3 class="text-xl font-black text-slate-900 font-display">No matching equipment found</h3>
+          <p class="text-xs text-slate-500 max-w-md mx-auto font-medium">
+            Try adjusting your search query, price slider, or category filters. You can also list this item as a senior!
+          </p>
+          <div class="pt-2 flex justify-center space-x-2">
+            <a href="/marketplace" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">
+              Clear Filters
+            </a>
+            <a href="/sell" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-black shadow-xs">
+              List This Item
+            </a>
+          </div>
+        </div>
+      {% endif %}
+
+    </div>
+
+  </div>
+</div>
+{% endblock %}

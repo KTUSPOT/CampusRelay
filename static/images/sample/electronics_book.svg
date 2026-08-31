@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="emeraldBook" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#065f46"/>
+      <stop offset="100%" stop-color="#022c22"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="#f8fafc" rx="16"/>
+  <g transform="translate(85, 40)">
+    <rect x="-15" y="10" width="25" height="310" rx="4" fill="#022c22" stroke="#011a14" stroke-width="2"/>
+    <rect x="225" y="15" width="15" height="300" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="1"/>
+    <rect x="0" y="0" width="230" height="320" rx="8" fill="url(#emeraldBook)" stroke="#059669" stroke-width="3"/>
+    <rect x="0" y="25" width="230" height="6" fill="#34d399"/>
+    <text x="115" y="70" fill="#a7f3d0" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" text-anchor="middle">BASIC</text>
+    <text x="115" y="95" fill="#ffffff" font-family="system-ui, sans-serif" font-size="17" font-weight="800" text-anchor="middle">ELECTRICAL &amp;</text>
+    <text x="115" y="120" fill="#34d399" font-family="system-ui, sans-serif" font-size="17" font-weight="800" text-anchor="middle">ELECTRONICS</text>
+    <g transform="translate(65, 145)">
+      <rect x="0" y="0" width="100" height="75" fill="rgba(0,0,0,0.25)" stroke="#10b981" stroke-width="1.5" rx="4"/>
+      <line x1="10" y1="38" x2="25" y2="38" stroke="#34d399" stroke-width="2"/>
+      <polyline points="25,38 30,30 35,46 40,30 45,46 50,38" fill="none" stroke="#34d399" stroke-width="2"/>
+      <line x1="50" y1="38" x2="65" y2="38" stroke="#34d399" stroke-width="2"/>
+      <line x1="65" y1="26" x2="65" y2="50" stroke="#34d399" stroke-width="2"/>
+      <line x1="72" y1="26" x2="72" y2="50" stroke="#34d399" stroke-width="2"/>
+      <line x1="72" y1="38" x2="90" y2="38" stroke="#34d399" stroke-width="2"/>
+      <text x="50" y="65" fill="#6ee7b7" font-family="monospace" font-size="8" text-anchor="middle">R-L-C TRANSIENT</text>
+    </g>
+    <text x="115" y="260" fill="#ffffff" font-family="system-ui, sans-serif" font-size="13" font-weight="bold" text-anchor="middle">B. L. THERAJA</text>
+    <text x="115" y="280" fill="#6ee7b7" font-family="system-ui, sans-serif" font-size="11" text-anchor="middle">S. Chand &amp; Company</text>
+  </g>
+</svg>

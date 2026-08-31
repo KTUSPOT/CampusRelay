@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <linearGradient id="steelGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e2e8f0"/>
+      <stop offset="50%" stop-color="#94a3b8"/>
+      <stop offset="100%" stop-color="#64748b"/>
+    </linearGradient>
+    <linearGradient id="brassGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#fde047"/>
+      <stop offset="50%" stop-color="#ca8a04"/>
+      <stop offset="100%" stop-color="#854d0e"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="#f1f5f9" rx="16"/>
+  <rect x="35" y="35" width="330" height="330" fill="#ffffff" stroke="#cbd5e1" stroke-width="2" rx="6"/>
+  <rect x="45" y="45" width="310" height="310" fill="none" stroke="#93c5fd" stroke-width="1" stroke-dasharray="6 4"/>
+  <rect x="40" y="35" width="40" height="50" fill="#1e293b" rx="4"/>
+  <circle cx="60" cy="60" r="14" fill="url(#brassGrad)" stroke="#78350f" stroke-width="2"/>
+  <line x1="60" y1="60" x2="180" y2="140" stroke="url(#steelGrad)" stroke-width="8" stroke-linecap="round"/>
+  <line x1="65" y1="55" x2="185" y2="135" stroke="url(#steelGrad)" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="180" cy="140" r="16" fill="#334155" stroke="#0f172a" stroke-width="3"/>
+  <circle cx="180" cy="140" r="6" fill="url(#brassGrad)"/>
+  <line x1="180" y1="140" x2="260" y2="245" stroke="url(#steelGrad)" stroke-width="8" stroke-linecap="round"/>
+  <line x1="185" y1="135" x2="265" y2="240" stroke="url(#steelGrad)" stroke-width="4" stroke-linecap="round"/>
+  <g transform="translate(260, 245)">
+    <circle cx="0" cy="0" r="32" fill="#ffffff" stroke="#0284c7" stroke-width="3" opacity="0.95"/>
+    <circle cx="0" cy="0" r="12" fill="url(#brassGrad)" stroke="#78350f" stroke-width="2"/>
+    <path d="M-28 0 A28 28 0 0 1 28 0" fill="none" stroke="#0369a1" stroke-width="2" stroke-dasharray="3 3"/>
+    <rect x="0" y="-8" width="95" height="16" fill="rgba(56, 189, 248, 0.45)" stroke="#0284c7" stroke-width="1.5" rx="2"/>
+    <line x1="20" y1="-8" x2="20" y2="-2" stroke="#0f172a" stroke-width="1"/>
+    <line x1="40" y1="-8" x2="40" y2="-1" stroke="#0f172a" stroke-width="1"/>
+    <line x1="60" y1="-8" x2="60" y2="-2" stroke="#0f172a" stroke-width="1"/>
+    <line x1="80" y1="-8" x2="80" y2="-1" stroke="#0f172a" stroke-width="1"/>
+    <rect x="-8" y="0" width="16" height="95" fill="rgba(56, 189, 248, 0.45)" stroke="#0284c7" stroke-width="1.5" rx="2"/>
+    <line x1="-8" y1="20" x2="-2" y2="20" stroke="#0f172a" stroke-width="1"/>
+    <line x1="-8" y1="40" x2="-1" y2="40" stroke="#0f172a" stroke-width="1"/>
+    <line x1="-8" y1="60" x2="-2" y2="60" stroke="#0f172a" stroke-width="1"/>
+    <line x1="-8" y1="80" x2="-1" y2="80" stroke="#0f172a" stroke-width="1"/>
+  </g>
+  <text x="200" y="375" fill="#0369a1" font-family="system-ui, sans-serif" font-size="14" font-weight="bold" text-anchor="middle">OMEGA DELUXE MINI DRAFTER</text>
+</svg>
